@@ -1,0 +1,54 @@
+body {
+    background-color: #f8f9fa; /* Light background for contrast */
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #343a40; /* Darker color for headings */
+}
+
+.card {
+    margin-bottom: 20px; /* Space between cards */
+    border: 1px solid #dee2e6; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    transition: transform 0.2s; /* Smooth scaling effect */
+    background-color: #ffffff; /* White background for the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for card */
+    display: flex; /* Flexbox for horizontal layout */
+    height: 150px; /* Fixed height for cards */
+}
+
+.card img {
+    width: 100px; /* Set a fixed width for images */
+    height: 100px; /* Set a fixed height for images */
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px; /* Round corners of the left side */
+    object-fit: cover; /* Maintain aspect ratio */
+}
+
+.card-body {
+    background-color: #ffffff; /* White background for card body */
+    padding: 10px; /* Reduced padding inside the card body */
+    flex-grow: 1; /* Allow the card body to take the remaining space */
+}
+
+.card-title {
+    color: #007bff; /* Bootstrap primary color */
+}
+
+.btn {
+    margin-top: 10px; /* Space above buttons */
+}
+
+/* Background styling for the entire listing section */
+.listing-background {
+    background-color: #2c94fc; /* Light grey background for contrast */
+    padding: 20px; /* Padding around the listing section */
+    border-radius: 10px; /* Rounded corners for the background */
+}
