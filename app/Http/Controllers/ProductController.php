@@ -35,7 +35,7 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:2048',
             'zipFile' => 'nullable|mimes:zip|max:20480' 
         ]);
- 
+
         $product = new Product();
         $product->name = $request->name;
         $product->description = $request->description;

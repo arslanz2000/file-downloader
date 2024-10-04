@@ -26,7 +26,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="price" class="form-label">Price</label>
+            <label for="price" class="form-label">Size</label>
             <input type="text" name="price" id="price" class="form-control" value="{{ $product->price ?? '' }}" required>
         </div>
 
