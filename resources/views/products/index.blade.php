@@ -2,132 +2,381 @@
 
 @section('content')
     <div class="container-fluid listing-background">
-        <form action="{{ route('products.index') }}" method="GET" class="file-downloader-form">
-            <div style="display: flex; margin-left: 130px; margin-top: 20px; margin-bottom: 20px;">
-            <div>
-                <img src="{{ asset('storage/logos/seers.png') }}" alt="Logo" class="logo" />
-            </div>
-            <div class="file-downloader-input-group input-group">
-                <button type="submit" class="btn btn-primary" style="background: #0859D7 !important"><i
-                        class="fa fa-search"></i></button>
-                <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Search products"
-                    class="form-control">
-            </div>
-            </div>
-            <div class="file-downloader-nav">
-                <div></div>
-                <div class="file-downloader-nav-category">
-                    <img src="{{ asset('storage/logos/windows-black.png') }}" alt="Logo" class="logo" />
-                    Windows
-                </div>
-                <div class="file-downloader-nav-category">
-                    <img src="{{ asset('storage/logos/mac-os-black.png') }}" alt="Logo" class="logo" />
-                    Mac
-                </div>
-                <div class="file-downloader-nav-category">
-                    <img src="{{ asset('storage/logos/android-black.png') }}" alt="Logo" class="logo" />
-                    Android Apps
-                </div>
-                <div class="file-downloader-nav-category">
-                    <img src="{{ asset('storage/logos/android-black.png') }}" alt="Logo" class="logo" />
-                    Android Games
-                </div>
-                <div class="file-downloader-nav-category">
-                    <img src="{{ asset('storage/logos/joystick.png') }}" alt="Logo" class="logo" />
-                    PC Games
-                </div>
-                <div class="file-downloader-nav-category">
-                    <img src="{{ asset('storage/logos/open-book.png') }}" alt="Logo" class="logo" />
-                    Ebooks
-                </div>
-                <div class="file-downloader-nav-category">
-                    <img src="{{ asset('storage/logos/streaming.png') }}" alt="Logo" class="logo" />
-                    Video Courses
-                </div>
-                <div style="border: none !important"></div>
-            </div>
-        </form>
 
         <div class="row file-downloader-content-row">
             <div class="col-1"></div>
-            <div class="col-7">
-                <div class="mb-3 p-2" style="display: flex; align-items: center; width: 100%; border: 1px solid #ddd; border-left: 8px solid #0859D7; background: #fff;">
-                    <h5 style="margin-left:10px;">Windows</h5>
-                    <button class="btn btn-light" style="margin-left: auto;">View All</button>
-                </div>
-                
-                @foreach ($products as $product)
-                    <div class="col mb-4">
-                        <div class="card horizontal-card shadow-sm border-light d-flex flex-row">
-                            <div class="card-image" style="width: 110px; height: 90px;">
-                                <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/100x100?text=No+Image' }}"
-                                    alt="{{ $product->name }}" class="img-fluid"
-                                    style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
-
-                            <div class="card-body d-flex flex-row m-auto p-3">
-                                <div class="product-info">
-                                    <h5 class="card-title">{{ $product->name }}</h5>
-                                    <p class="card-text">{{ $product->description }}</p>
-                                </div>
-
-                                <div class="product-details products-border">
-                                    <p class="card-text">
-                                        <img src="{{ asset('storage/logos/windowsBlue.png') }}" alt="Logo"
-                                            class="logo" />
-                                        {{ $product->type }}
-                                    </p>
-                                </div>
-
-                                <div class="product-details products-border">
-                                    @if ($product->zip_file)
-                                        <a href="{{ asset('storage/logos/android-black') }}" class="btn btn-light"
-                                            download>Download Zip File</a>
-                                    @else
-                                        <p class="text-muted">No Zip File Available</p>
-                                    @endif
-                                </div>
-
-                                <div class="product-details products-border">
-                                    <h5 class="card-title   ">{{ floor($product->price) }} MB</h5>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
             <div class="col-3">
                 <div class="right-box">
                     <h4>PC Games</h4>
                     <hr>
-                    @foreach ($products as $product)
+                    @foreach ($windowsProducts->take(5) as $product)
                         <div class="d-flex mb-4">
                             <div
                                 style="width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; margin-right: 10px;">
-                                <img
-                                    src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/60x60?text=No+Image' }}"
+                                <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/60x60?text=No+Image' }}"
                                     alt="{{ $product->name }}" class="img-fluid"
                                     style="width: 60px; height: 60px; object-fit: cover;">
-                                </div>
+                            </div>
                             <div class="ml-2" style="width: 70%;">
                                 <h5 class="card-title mb-1"
                                     style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                     {{ $product->name }}
-                                    </h5>
-                                <p class="card-text mb-1" style="color: #0859D7; font-weight: bold;">{{ $product->type }}</p>
+                                </h5>
+                                <p class="card-text mb-1" style="color: #0859D7; font-weight: bold;">{{ $product->type }}
+                                </p>
                                 <h5 class="card-title">{{ floor($product->price) }} MB</h5>
-                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
             </div>
+            <div class="col-7">
+                <div class="mb-3 p-2"
+                    style="display: flex; align-items: center; width: 100%; border: 1px solid #ddd; border-left: 8px solid #0859D7; background: #fff;">
+                    <h5 style="margin-left:10px;">Windows</h5>
+                    <button class="btn btn-light" style="margin-left: auto;">View All</button>
+                </div>
+
+                @foreach ($windowsProducts as $product)
+    <div class="col mb-4">
+        <div class="card horizontal-card shadow-sm border-light d-flex flex-row"
+            onclick="window.location='{{ route('products.show', $product->id) }}'">
+            <div class="card-image" style="width: 110px; height: 90px;">
+                <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/100x100?text=No+Image' }}"
+                    alt="{{ $product->name }}" class="img-fluid"
+                    style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+
+            <div class="card-body d-flex flex-row m-auto p-3">
+                <div class="product-info">
+                    <h5 class="card-title">{{ $product->name }}</h5>
+                    <p class="card-text">{{ $product->description }}</p>
+                </div>
+
+                <div class="product-details products-border">
+                    <p class="card-text">
+                        <img src="{{ asset('storage/logos/windowsBlue.png') }}" alt="Logo" class="logo" />
+                        {{ $product->type }}
+                    </p>
+                </div>
+
+                <div class="product-details products-border">
+                    @if ($product->zip_file)
+                        <a href="{{ asset('storage/logos/android-black') }}" class="btn btn-light" download>Download Zip File</a>
+                    @else
+                        <p class="text-muted">No Zip File Available</p>
+                    @endif
+                </div>
+
+                <div class="product-details products-border">
+                    <h5 class="card-title">{{ floor($product->price) }} MB</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+
+                <div class="mb-3 p-2"
+                    style="display: flex; align-items: center; width: 100%; border: 1px solid #ddd; border-left: 8px solid #0859D7; background: #fff;">
+                    <h5 style="margin-left:10px;">Mac</h5>
+                    <button class="btn btn-light" style="margin-left: auto;">View All</button>
+                </div>
+
+                @foreach ($macProducts as $product)
+                    <div class="col mb-4">
+                        <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
+                            <div class="card horizontal-card shadow-sm border-light d-flex flex-row">
+                                <div class="card-image" style="width: 110px; height: 90px;">
+                                    <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/100x100?text=No+Image' }}"
+                                        alt="{{ $product->name }}" class="img-fluid"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+
+                                <div class="card-body d-flex flex-row m-auto p-3">
+                                    <div class="product-info">
+                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                        <p class="card-text">{{ $product->description }}</p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <p class="card-text">
+                                            <img src="{{ asset('storage/logos/windowsBlue.png') }}" alt="Logo"
+                                                class="logo" />
+                                            {{ $product->type }}
+                                        </p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        @if ($product->zip_file)
+                                            <a href="{{ asset('storage/logos/android-black') }}" class="btn btn-light"
+                                                download>Download Zip File</a>
+                                        @else
+                                            <p class="text-muted">No Zip File Available</p>
+                                        @endif
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <h5 class="card-title   ">{{ floor($product->price) }} MB</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+
+                <div class="mb-3 p-2"
+                    style="display: flex; align-items: center; width: 100%; border: 1px solid #ddd; border-left: 8px solid #0859D7; background: #fff;">
+                    <h5 style="margin-left:10px;">Android Apps</h5>
+                    <button class="btn btn-light" style="margin-left: auto;">View All</button>
+                </div>
+
+                @foreach ($androidAppsProducts as $product)
+                    <div class="col mb-4">
+                        <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
+                            <div class="card horizontal-card shadow-sm border-light d-flex flex-row">
+                                <div class="card-image" style="width: 110px; height: 90px;">
+                                    <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/100x100?text=No+Image' }}"
+                                        alt="{{ $product->name }}" class="img-fluid"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+
+                                <div class="card-body d-flex flex-row m-auto p-3">
+                                    <div class="product-info">
+                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                        <p class="card-text">{{ $product->description }}</p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <p class="card-text">
+                                            <img src="{{ asset('storage/logos/windowsBlue.png') }}" alt="Logo"
+                                                class="logo" />
+                                            {{ $product->type }}
+                                        </p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        @if ($product->zip_file)
+                                            <a href="{{ asset('storage/logos/android-black') }}" class="btn btn-light"
+                                                download>Download Zip File</a>
+                                        @else
+                                            <p class="text-muted">No Zip File Available</p>
+                                        @endif
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <h5 class="card-title   ">{{ floor($product->price) }} MB</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+
+                <div class="mb-3 p-2"
+                    style="display: flex; align-items: center; width: 100%; border: 1px solid #ddd; border-left: 8px solid #0859D7; background: #fff;">
+                    <h5 style="margin-left:10px;">Android Games</h5>
+                    <button class="btn btn-light" style="margin-left: auto;">View All</button>
+                </div>
+
+                @foreach ($androidGamesProducts as $product)
+                    <div class="col mb-4">
+                        <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
+                            <div class="card horizontal-card shadow-sm border-light d-flex flex-row">
+                                <div class="card-image" style="width: 110px; height: 90px;">
+                                    <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/100x100?text=No+Image' }}"
+                                        alt="{{ $product->name }}" class="img-fluid"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+
+                                <div class="card-body d-flex flex-row m-auto p-3">
+                                    <div class="product-info">
+                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                        <p class="card-text">{{ $product->description }}</p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <p class="card-text">
+                                            <img src="{{ asset('storage/logos/windowsBlue.png') }}" alt="Logo"
+                                                class="logo" />
+                                            {{ $product->type }}
+                                        </p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        @if ($product->zip_file)
+                                            <a href="{{ asset('storage/logos/android-black') }}" class="btn btn-light"
+                                                download>Download Zip File</a>
+                                        @else
+                                            <p class="text-muted">No Zip File Available</p>
+                                        @endif
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <h5 class="card-title   ">{{ floor($product->price) }} MB</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+
+                <div class="mb-3 p-2"
+                    style="display: flex; align-items: center; width: 100%; border: 1px solid #ddd; border-left: 8px solid #0859D7; background: #fff;">
+                    <h5 style="margin-left:10px;">PC Games</h5>
+                    <button class="btn btn-light" style="margin-left: auto;">View All</button>
+                </div>
+
+                @foreach ($pcGamesProducts as $product)
+                    <div class="col mb-4">
+                        <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
+                            <div class="card horizontal-card shadow-sm border-light d-flex flex-row">
+                                <div class="card-image" style="width: 110px; height: 90px;">
+                                    <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/100x100?text=No+Image' }}"
+                                        alt="{{ $product->name }}" class="img-fluid"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+
+                                <div class="card-body d-flex flex-row m-auto p-3">
+                                    <div class="product-info">
+                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                        <p class="card-text">{{ $product->description }}</p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <p class="card-text">
+                                            <img src="{{ asset('storage/logos/windowsBlue.png') }}" alt="Logo"
+                                                class="logo" />
+                                            {{ $product->type }}
+                                        </p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        @if ($product->zip_file)
+                                            <a href="{{ asset('storage/logos/android-black') }}" class="btn btn-light"
+                                                download>Download Zip File</a>
+                                        @else
+                                            <p class="text-muted">No Zip File Available</p>
+                                        @endif
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <h5 class="card-title   ">{{ floor($product->price) }} MB</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+
+                <div class="mb-3 p-2"
+                    style="display: flex; align-items: center; width: 100%; border: 1px solid #ddd; border-left: 8px solid #0859D7; background: #fff;">
+                    <h5 style="margin-left:10px;">Ebooks</h5>
+                    <button class="btn btn-light" style="margin-left: auto;">View All</button>
+                </div>
+
+                @foreach ($ebooksProducts as $product)
+                    <div class="col mb-4">
+                        <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
+                            <div class="card horizontal-card shadow-sm border-light d-flex flex-row">
+                                <div class="card-image" style="width: 110px; height: 90px;">
+                                    <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/100x100?text=No+Image' }}"
+                                        alt="{{ $product->name }}" class="img-fluid"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+
+                                <div class="card-body d-flex flex-row m-auto p-3">
+                                    <div class="product-info">
+                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                        <p class="card-text">{{ $product->description }}</p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <p class="card-text">
+                                            <img src="{{ asset('storage/logos/windowsBlue.png') }}" alt="Logo"
+                                                class="logo" />
+                                            {{ $product->type }}
+                                        </p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        @if ($product->zip_file)
+                                            <a href="{{ asset('storage/logos/android-black') }}" class="btn btn-light"
+                                                download>Download Zip File</a>
+                                        @else
+                                            <p class="text-muted">No Zip File Available</p>
+                                        @endif
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <h5 class="card-title   ">{{ floor($product->price) }} MB</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+
+                <div class="mb-3 p-2"
+                    style="display: flex; align-items: center; width: 100%; border: 1px solid #ddd; border-left: 8px solid #0859D7; background: #fff;">
+                    <h5 style="margin-left:10px;">Video Courses</h5>
+                    <button class="btn btn-light" style="margin-left: auto;">View All</button>
+                </div>
+
+                @foreach ($videoCoursesProducts as $product)
+                    <div class="col mb-4">
+                        <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">
+                            <div class="card horizontal-card shadow-sm border-light d-flex flex-row">
+                                <div class="card-image" style="width: 110px; height: 90px;">
+                                    <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/100x100?text=No+Image' }}"
+                                        alt="{{ $product->name }}" class="img-fluid"
+                                        style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+
+                                <div class="card-body d-flex flex-row m-auto p-3">
+                                    <div class="product-info">
+                                        <h5 class="card-title">{{ $product->name }}</h5>
+                                        <p class="card-text">{{ $product->description }}</p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <p class="card-text">
+                                            <img src="{{ asset('storage/logos/windowsBlue.png') }}" alt="Logo"
+                                                class="logo" />
+                                            {{ $product->type }}
+                                        </p>
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        @if ($product->zip_file)
+                                            <a href="{{ asset('storage/logos/android-black') }}" class="btn btn-light"
+                                                download>Download Zip File</a>
+                                        @else
+                                            <p class="text-muted">No Zip File Available</p>
+                                        @endif
+                                    </div>
+
+                                    <div class="product-details products-border">
+                                        <h5 class="card-title   ">{{ floor($product->price) }} MB</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+
         </div>
 
 
-        <div class="d-flex justify-content-center">
-            {{ $products->links() }}
-        </div>
+        {{-- <div class="d-flex justify-content-center">
+            {{ $windowsProducts->links() }}
+        </div> --}}
     </div>
     <script>
         document.querySelectorAll('.file-downloader-nav-category').forEach(function(category) {
@@ -144,6 +393,7 @@
             });
         });
     </script>
+
     <style>
         .listing-background {
             margin: 0px;
@@ -165,6 +415,7 @@
             flex-direction: row;
             background-color: #fff;
             /* margin-left: 120px; */
+            cursor: pointer;
         }
 
         .card-overlay {
@@ -187,7 +438,7 @@
         .file-downloader-input-group {
             width: 40%;
             margin-left: 20px;
-            
+
         }
 
         .file-downloader-nav {

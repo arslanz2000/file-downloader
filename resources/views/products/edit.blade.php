@@ -51,6 +51,76 @@
                         @endif
                     </div>
 
+                    <div class="form-group">
+                        <label for="file_name">File Name:</label>
+                        <input type="text" name="file_name" id="file_name" value="{{ $product->file_name }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="created_by">Created By:</label>
+                        <input type="text" name="created_by" id="created_by" value="{{ $product->created_by }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="version">Version:</label>
+                        <input type="text" name="version" id="version" value="{{ $product->version }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="license_type">License Type:</label>
+                        <input type="text" name="license_type" id="license_type" value="{{ $product->license_type }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="change_log">Change Log:</label>
+                        <textarea name="change_log" id="change_log" class="form-control" rows="4">{{ $product->change_log }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="languages">Languages:</label>
+                        <input type="text" name="languages" id="languages" value="{{ $product->languages }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="total_downloads">Total Downloads:</label>
+                        <input type="number" name="total_downloads" id="total_downloads" value="{{ $product->total_downloads }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="uploaded_by">Uploaded By:</label>
+                        <input type="text" name="uploaded_by" id="uploaded_by" value="{{ $product->uploaded_by }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sub_category">Sub Category:</label>
+                        <input type="text" name="sub_category" id="sub_category" value="{{ $product->sub_category }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="main_image">Upload Main Image:</label>
+                        <input type="file" name="main_image" id="main_image" class="form-control-file">
+                        @if($product->main_image)
+                            <img src="{{ Storage::url($product->main_image) }}" alt="{{ $product->name }}" class="img-thumbnail mt-3" width="150">
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="overview">Overview:</label>
+                        <textarea name="overview" id="overview" class="form-control" rows="4">{{ $product->overview }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="features">Features:</label>
+                        <textarea name="features" id="features" class="form-control" rows="4">{{ str_replace('\n', "\n", $product->features) }}</textarea>
+                        <small class="form-text text-muted">Please enter each feature on a new line.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="system_requirements">System Requirements:</label>
+                        <textarea name="system_requirements" id="system_requirements" class="form-control" rows="4">{{ str_replace('\n', "\n", $product->system_requirements) }}</textarea>
+                        <small class="form-text text-muted">Please enter each requirement on a new line.</small>
+                    </div>
+
                     <div class="form-group text-right">
                         <button type="submit" class="btn btn-primary">Update Product</button>
                     </div>
