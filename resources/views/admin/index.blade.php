@@ -33,7 +33,6 @@
             <th>Image</th>
             <th>Price</th>
             <th>Type</th>
-            <th>Zip File</th> <!-- New column for Zip file -->
             <th>Actions</th>
         </tr>
     </thead>
@@ -50,15 +49,9 @@
                     No Image
                 @endif
             </td>
-            <td>{{ $product->price }}</td>
-            <td>{{ $product->type }}</td>
-            <td>
-                @if ($product->zip_file)
-                    <a href="{{ Storage::url($product->zip_file) }}" class="btn btn-info" download>Download Zip</a>
-                @else
-                    No Zip File
-                @endif
-            </td>
+            <td>{{ $product->size }}</td>
+            <td>{{ $product->category }}</td>
+            
             <td>
                 <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary">Edit</a>
                 <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UpcomingProductController;
+
 
 
 Route::get('/', [ProductController::class, 'showProducts'])->name('products.index'); 
@@ -16,5 +18,8 @@ Route::prefix('admin')->group(function () {
     Route::get('/product/{id}', [ProductController::class, 'show'])->name('products.show');
     Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy'); 
     Route::get('/products/category/{type}', [ProductController::class, 'allproduct'])->name('products.category');
+    Route::resource('upcoming-products', UpcomingProductController::class);
 
 });
+
+

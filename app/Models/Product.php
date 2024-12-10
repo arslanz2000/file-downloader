@@ -8,30 +8,32 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
-        'description',
-        'price',
-        'type',
-        'image',
-        'zip_file',
-        'file_name',
-        'created_by',
+        'short_description',
+        'icon',
+        'category',
+        'subcategory',
+        'launch_date',
+        'rating',
+        'size',
+        'download_link',
+        'is_active',
         'version',
-        'license_type',
-        'change_log',
-        'languages',
         'total_downloads',
-        'uploaded_by',
-        'sub_category',
-        'main_image',
-        'overview',
-        'features',
-        'system_requirements',
+        'version_details',
+        'language',
+        'pass_code',
+        'display_picture',
+        'details',
+        'tags',
+        'description',
     ];
+
     protected $casts = [
-         'features' => 'array',
-         'system_requirements' => 'array',
-        ];
-        
+        'launch_date' => 'date',
+        'rating' => 'float',
+        'is_active' => 'boolean',
+    ];
 }

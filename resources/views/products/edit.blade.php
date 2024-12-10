@@ -6,6 +6,26 @@
     <title>Edit Product</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- TinyMCE Script -->
+    {{-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> --}}
+    <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#details',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar: 'undo redo | fontselect fontsizeselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent',
+            height: 300,
+            menubar: false,
+            branding: false,
+            font_size_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 64pt', 
+            font_family_formats: 'Arial=arial,helvetica,sans-serif; Times New Roman=times new roman,times; Courier New=courier new,courier,monospace; Verdana=verdana,geneva,sans-serif;', // Custom font families
+            content_style: 'body { font-family: Arial, sans-serif; font-size: 14pt; }',
+        });
+    </script>     
+    
 </head>
 <body>
     <div class="container mt-5">
@@ -24,41 +44,59 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="short_description">Short Description:</label>
+                        <textarea name="short_description" id="short_description" class="form-control" rows="3" required>{{ $product->short_description }}</textarea>
+                    </div>
+
+                    <div class="form-group">
                         <label for="description">Description:</label>
-                        <textarea name="description" id="description" class="form-control" rows="4" required>{{ $product->description }}</textarea>
+                        <textarea name="description" id="description" class="form-control" rows="4">{{ $product->description }}</textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Price:</label>
-                        <input type="text" name="price" id="price" value="{{ $product->price }}" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="type">Product Type:</label>
-                        <input type="text" name="type" id="type" value="{{ $product->type }}" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="zipFile">Upload Zip File:</label>
-                        <input type="file" name="zipFile" id="zipFile" class="form-control-file" accept=".zip">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="image">Upload Product Image:</label>
-                        <input type="file" name="image" id="image" class="form-control-file">
-                        @if($product->image)
-                            <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" class="img-thumbnail mt-3" width="150">
+                        <label for="icon">Upload Icon:</label>
+                        <input type="file" name="icon" id="icon" class="form-control-file" accept="image/*">
+                        @if($product->icon)
+                            <img src="{{ Storage::url($product->icon) }}" alt="{{ $product->name }}" class="img-thumbnail mt-3" width="150">
                         @endif
                     </div>
 
                     <div class="form-group">
-                        <label for="file_name">File Name:</label>
-                        <input type="text" name="file_name" id="file_name" value="{{ $product->file_name }}" class="form-control">
+                        <label for="category">Category:</label>
+                        <input type="text" name="category" id="category" value="{{ $product->category }}" class="form-control" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="created_by">Created By:</label>
-                        <input type="text" name="created_by" id="created_by" value="{{ $product->created_by }}" class="form-control">
+                        <label for="subcategory">Subcategory:</label>
+                        <input type="text" name="subcategory" id="subcategory" value="{{ $product->subcategory }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="launch_date">Launch Date:</label>
+                        <input type="date" name="launch_date" id="launch_date" value="{{ $product->launch_date }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rating">Rating:</label>
+                        <input type="number" step="0.1" min="0" max="5" name="rating" id="rating" value="{{ $product->rating }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="size">Size:</label>
+                        <input type="text" name="size" id="size" value="{{ $product->size }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="download_link">Download Link:</label>
+                        <input type="url" name="download_link" id="download_link" value="{{ $product->download_link }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="is_active">Is Active:</label>
+                        <select name="is_active" id="is_active" class="form-control">
+                            <option value="1" {{ $product->is_active ? 'selected' : '' }}>Yes</option>
+                            <option value="0" {{ !$product->is_active ? 'selected' : '' }}>No</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -67,58 +105,36 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="license_type">License Type:</label>
-                        <input type="text" name="license_type" id="license_type" value="{{ $product->license_type }}" class="form-control">
+                        <label for="version_details">Version Details:</label>
+                        <textarea name="version_details" id="version_details" class="form-control" rows="3">{{ $product->version_details }}</textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="change_log">Change Log:</label>
-                        <textarea name="change_log" id="change_log" class="form-control" rows="4">{{ $product->change_log }}</textarea>
+                        <label for="language">Language:</label>
+                        <input type="text" name="language" id="language" value="{{ $product->language }}" class="form-control">
                     </div>
 
                     <div class="form-group">
-                        <label for="languages">Languages:</label>
-                        <input type="text" name="languages" id="languages" value="{{ $product->languages }}" class="form-control">
+                        <label for="pass_code">Pass Code:</label>
+                        <input type="text" name="pass_code" id="pass_code" value="{{ $product->pass_code }}" class="form-control">
                     </div>
 
                     <div class="form-group">
-                        <label for="total_downloads">Total Downloads:</label>
-                        <input type="number" name="total_downloads" id="total_downloads" value="{{ $product->total_downloads }}" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="uploaded_by">Uploaded By:</label>
-                        <input type="text" name="uploaded_by" id="uploaded_by" value="{{ $product->uploaded_by }}" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="sub_category">Sub Category:</label>
-                        <input type="text" name="sub_category" id="sub_category" value="{{ $product->sub_category }}" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="main_image">Upload Main Image:</label>
-                        <input type="file" name="main_image" id="main_image" class="form-control-file">
-                        @if($product->main_image)
-                            <img src="{{ Storage::url($product->main_image) }}" alt="{{ $product->name }}" class="img-thumbnail mt-3" width="150">
+                        <label for="display_picture">Upload Display Picture:</label>
+                        <input type="file" name="display_picture" id="display_picture" class="form-control-file" accept="image/*">
+                        @if($product->display_picture)
+                            <img src="{{ Storage::url($product->display_picture) }}" alt="{{ $product->name }}" class="img-thumbnail mt-3" width="150">
                         @endif
                     </div>
 
                     <div class="form-group">
-                        <label for="overview">Overview:</label>
-                        <textarea name="overview" id="overview" class="form-control" rows="4">{{ $product->overview }}</textarea>
+                        <label for="details">Details:</label>
+                        <textarea name="details" id="details" class="form-control" rows="4">{{ $product->details }}</textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="features">Features:</label>
-                        <textarea name="features" id="features" class="form-control" rows="4">{{ str_replace('\n', "\n", $product->features) }}</textarea>
-                        <small class="form-text text-muted">Please enter each feature on a new line.</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="system_requirements">System Requirements:</label>
-                        <textarea name="system_requirements" id="system_requirements" class="form-control" rows="4">{{ str_replace('\n', "\n", $product->system_requirements) }}</textarea>
-                        <small class="form-text text-muted">Please enter each requirement on a new line.</small>
+                        <label for="tags">Tags:</label>
+                        <input type="text" name="tags" id="tags" value="{{ $product->tags }}" class="form-control">
                     </div>
 
                     <div class="form-group text-right">

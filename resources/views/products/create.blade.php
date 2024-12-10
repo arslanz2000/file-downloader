@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add/Edit Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> --}}
+    <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#details',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar: 'undo redo | fontselect fontsizeselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent',
+            height: 300,
+            menubar: false,
+            branding: false,
+            font_size_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 64pt', 
+            font_family_formats: 'Arial=arial,helvetica,sans-serif; Times New Roman=times new roman,times; Courier New=courier new,courier,monospace; Verdana=verdana,geneva,sans-serif;', // Custom font families
+            content_style: 'body { font-family: Arial, sans-serif; font-size: 14pt; }',
+        });
+    </script>
+
 </head>
 <body class="container my-5">
     <h1 class="mb-4">{{ isset($product) ? 'Edit' : 'Add' }} Product</h1>
@@ -21,50 +38,59 @@
         </div>
 
         <div class="mb-3">
+            <label for="short_description" class="form-label">Short Description</label>
+            <textarea name="short_description" id="short_description" class="form-control" required>{{ $product->short_description ?? '' }}</textarea>
+        </div>
+
+        <div class="mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea name="description" id="description" class="form-control" required>{{ $product->description ?? '' }}</textarea>
+            <textarea name="description" id="description" class="form-control">{{ $product->description ?? '' }}</textarea>
         </div>
 
         <div class="mb-3">
-            <label for="price" class="form-label">Price</label>
-            <input type="number" name="price" id="price" class="form-control" value="{{ $product->price ?? '' }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label for="type" class="form-label">Type</label>
-            <select name="type" id="type" class="form-control" required>
-                <option value="">Select Type</option>
-                <option value="Windows" {{ (isset($product) && $product->type == 'Windows') ? 'selected' : '' }}>Windows</option>
-                <option value="Mac" {{ (isset($product) && $product->type == 'Mac') ? 'selected' : '' }}>Mac</option>
-                <option value="Android Apps" {{ (isset($product) && $product->type == 'Android Apps') ? 'selected' : '' }}>Android Apps</option>
-                <option value="Android Games" {{ (isset($product) && $product->type == 'Android Games') ? 'selected' : '' }}>Android Games</option>
-                <option value="PC Games" {{ (isset($product) && $product->type == 'PC Games') ? 'selected' : '' }}>PC Games</option>
-                <option value="Ebooks" {{ (isset($product) && $product->type == 'Ebooks') ? 'selected' : '' }}>Ebooks</option>
-                <option value="Video Courses" {{ (isset($product) && $product->type == 'Video Courses') ? 'selected' : '' }}>Video Courses</option>
-            </select>
-        </div>
-        
-        <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
-            <input type="file" name="image" id="image" class="form-control" accept="image/*">
-            @if(isset($product) && $product->image)
-                <img src="{{ Storage::url($product->image) }}" class="mt-2" width="100" alt="{{ $product->name }}">
+            <label for="icon" class="form-label">Icon</label>
+            <input type="file" name="icon" id="icon" class="form-control" accept="image/*">
+            @if(isset($product) && $product->icon)
+                <img src="{{ Storage::url($product->icon) }}" class="mt-2" width="100" alt="{{ $product->name }}">
             @endif
         </div>
 
         <div class="mb-3">
-            <label for="zipFile" class="form-label">ZIP File</label>
-            <input type="file" name="zipFile" id="zipFile" class="form-control" accept=".zip">
+            <label for="category" class="form-label">Category</label>
+            <input type="text" name="category" id="category" class="form-control" value="{{ $product->category ?? '' }}" required>
         </div>
 
         <div class="mb-3">
-            <label for="file_name" class="form-label">File Name</label>
-            <input type="text" name="file_name" id="file_name" class="form-control" value="{{ $product->file_name ?? '' }}">
+            <label for="subcategory" class="form-label">Subcategory</label>
+            <input type="text" name="subcategory" id="subcategory" class="form-control" value="{{ $product->subcategory ?? '' }}">
         </div>
 
         <div class="mb-3">
-            <label for="created_by" class="form-label">Created By</label>
-            <input type="text" name="created_by" id="created_by" class="form-control" value="{{ $product->created_by ?? '' }}">
+            <label for="launch_date" class="form-label">Launch Date</label>
+            <input type="date" name="launch_date" id="launch_date" class="form-control" value="{{ $product->launch_date ?? '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="rating" class="form-label">Rating</label>
+            <input type="number" step="0.1" min="0" max="5" name="rating" id="rating" class="form-control" value="{{ $product->rating ?? '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="size" class="form-label">Size</label>
+            <input type="text" name="size" id="size" class="form-control" value="{{ $product->size ?? '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="download_link" class="form-label">Download Link</label>
+            <input type="url" name="download_link" id="download_link" class="form-control" value="{{ $product->download_link ?? '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="is_active" class="form-label">Is Active</label>
+            <select name="is_active" id="is_active" class="form-control" required>
+                <option value="1" {{ isset($product) && $product->is_active ? 'selected' : '' }}>Yes</option>
+                <option value="0" {{ isset($product) && !$product->is_active ? 'selected' : '' }}>No</option>
+            </select>
         </div>
 
         <div class="mb-3">
@@ -73,88 +99,41 @@
         </div>
 
         <div class="mb-3">
-            <label for="license_type" class="form-label">License Type</label>
-            <input type="text" name="license_type" id="license_type" class="form-control" value="{{ $product->license_type ?? '' }}">
+            <label for="version_details" class="form-label">Version Details</label>
+            <textarea name="version_details" id="version_details" class="form-control">{{ $product->version_details ?? '' }}</textarea>
         </div>
 
         <div class="mb-3">
-            <label for="change_log" class="form-label">Change Log</label>
-            <textarea name="change_log" id="change_log" class="form-control">{{ $product->change_log ?? '' }}</textarea>
+            <label for="language" class="form-label">Language</label>
+            <input type="text" name="language" id="language" class="form-control" value="{{ $product->language ?? '' }}">
         </div>
 
         <div class="mb-3">
-            <label for="languages" class="form-label">Languages</label>
-            <input type="text" name="languages" id="languages" class="form-control" value="{{ $product->languages ?? '' }}">
+            <label for="pass_code" class="form-label">Pass Code</label>
+            <input type="text" name="pass_code" id="pass_code" class="form-control" value="{{ $product->pass_code ?? '' }}">
         </div>
 
         <div class="mb-3">
-            <label for="total_downloads" class="form-label">Total Downloads</label>
-            <input type="number" name="total_downloads" id="total_downloads" class="form-control" value="{{ $product->total_downloads ?? '' }}">
-        </div>
-
-        <div class="mb-3">
-            <label for="uploaded_by" class="form-label">Uploaded By</label>
-            <input type="text" name="uploaded_by" id="uploaded_by" class="form-control" value="{{ $product->uploaded_by ?? '' }}">
-        </div>
-
-        <div class="mb-3">
-            <label for="sub_category" class="form-label">Sub Category</label>
-            <input type="text" name="sub_category" id="sub_category" class="form-control" value="{{ $product->sub_category ?? '' }}">
-        </div>
-
-        <div class="mb-3">
-            <label for="main_image" class="form-label">Main Image</label>
-            <input type="file" name="main_image" id="main_image" class="form-control" accept="image/*">
-            @if(isset($product) && $product->main_image)
-                <img src="{{ Storage::url($product->main_image) }}" class="mt-2" width="100" alt="{{ $product->name }}">
+            <label for="display_picture" class="form-label">Display Picture</label>
+            <input type="file" name="display_picture" id="display_picture" class="form-control" accept="image/*">
+            @if(isset($product) && $product->display_picture)
+                <img src="{{ Storage::url($product->display_picture) }}" class="mt-2" width="100" alt="{{ $product->name }}">
             @endif
         </div>
 
         <div class="mb-3">
-            <label for="overview" class="form-label">Overview</label>
-            <textarea name="overview" id="overview" class="form-control">{{ $product->overview ?? '' }}</textarea>
+            <label for="details" class="form-label">Details</label>
+            <textarea name="details" id="details" class="form-control">{{ $product->details ?? '' }}</textarea>
         </div>
 
         <div class="mb-3">
-            <label for="features" class="form-label">Features</label>
-            <div id="features-container">
-                <input type="text" name="features[]" class="form-control mb-2" placeholder="Feature" value="{{ isset($product) ? explode("\n", $product->features)[0] : '' }}">
-            </div>
-            <button type="button" id="add-feature" class="btn btn-secondary mt-2">Add Another Feature</button>
-        </div>
-
-        <div class="mb-3">
-            <label for="system_requirements" class="form-label">System Requirements</label>
-            <div id="requirements-container">
-                <input type="text" name="system_requirements[]" class="form-control mb-2" placeholder="System Requirement" value="{{ isset($product) ? explode("\n", $product->system_requirements)[0] : '' }}">
-            </div>
-            <button type="button" id="add-requirement" class="btn btn-secondary mt-2">Add Another Requirement</button>
+            <label for="tags" class="form-label">Tags</label>
+            <input type="text" name="tags" id="tags" class="form-control" value="{{ $product->tags ?? '' }}">
         </div>
 
         <button type="submit" class="btn btn-primary">{{ isset($product) ? 'Update' : 'Add' }} Product</button>
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.getElementById('add-feature').addEventListener('click', function() {
-            const container = document.getElementById('features-container');
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.name = 'features[]';
-            input.className = 'form-control mb-2';
-            input.placeholder = 'Feature';
-            container.appendChild(input);
-        });
-
-        document.getElementById('add-requirement').addEventListener('click', function() {
-            const container = document.getElementById('requirements-container');
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.name = 'system_requirements[]';
-            input.className = 'form-control mb-2';
-            input.placeholder = 'System Requirement';
-            container.appendChild(input);
-        });
-    </script>
 </body>
 </html>
