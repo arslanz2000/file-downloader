@@ -12,8 +12,8 @@ class ProductController extends Controller
         $search = $request->input('search');
         $products = Product::when($search, function ($query, $search) {
             return $query->where('name', 'like', '%' . $search . '%')
-                         ->orWhere('short_description', 'like', '%' . $search . '%')
-                         ->orWhere('tags', 'like', '%' . $search . '%');
+                ->orWhere('short_description', 'like', '%' . $search . '%')
+                ->orWhere('tags', 'like', '%' . $search . '%');
         })->paginate(10);
 
         return view('admin.index', compact('products', 'search'));
@@ -127,8 +127,8 @@ class ProductController extends Controller
             $products[$category] = Product::where('type', $category)
                 ->when($search, function ($query, $search) {
                     $query->where('name', 'like', '%' . $search . '%')
-                          ->orWhere('short_description', 'like', '%' . $search . '%')
-                          ->orWhere('tags', 'like', '%' . $search . '%');
+                        ->orWhere('short_description', 'like', '%' . $search . '%')
+                        ->orWhere('tags', 'like', '%' . $search . '%');
                 })
                 ->orderBy('created_at', 'desc')
                 ->take(10)
@@ -138,4 +138,41 @@ class ProductController extends Controller
         return view('products.index', compact('products', 'search'));
     }
 
+    public function fetchProductsByCategory(Request $request)
+    {
+        $validated = $request->validate([
+            'category' => 'required|string|max:255',
+        ]);
+
+        $category = $validated['category'];
+
+        $products = Product::where('category', $category)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return response()->json([
+            'success' => true,
+            'total' => $products->total(),
+            'data' => $products->items(),
+            'current_page' => $products->currentPage(),
+            'last_page' => $products->lastPage(),
+        ]);
+    }
+
+    public function fetchLastSixMonthsProducts(Request $request)
+    {
+        $sixMonthsAgo = now()->subMonths(6);
+
+        $products = Product::where('created_at', '>=', $sixMonthsAgo)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return response()->json([
+            'success' => true,
+            'total' => $products->total(),
+            'data' => $products->items(),
+            'current_page' => $products->currentPage(),
+            'last_page' => $products->lastPage(),
+        ]);
+    }
 }

@@ -66,4 +66,20 @@ class UpcomingProductController extends Controller
         $upcomingProduct->delete();
         return redirect()->route('upcoming-products.index');
     }
+
+    public function getActiveProducts()
+{
+    $products = UpcomingProduct::where('is_active', 1)->get();
+
+    $products->transform(function ($product) {
+        $product->image = 'upcoming/' . $product->image;
+        return $product;
+    });
+
+    return response()->json([
+        'success' => true,
+        'data' => $products,
+    ]);
+}
+
 }
