@@ -30,6 +30,9 @@ class Product extends Model
         'tags',
         'description',
         'additional_tags',
+        'seo_title',
+        'seo_description',
+        'seo_tags',
     ];
 
     protected $casts = [

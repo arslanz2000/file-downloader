@@ -162,7 +162,21 @@
                         <label for="tags">Tags:</label>
                         <input type="text" name="tags" id="tags" value="{{ $product->tags }}" class="form-control">
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="seo_title">SEO Title:</label>
+                        <input type="text" name="seo_title" id="seo_title" value="{{ $product->seo_title }}" class="form-control">
+                    </div>
 
+                    <div class="form-group">
+                        <label for="seo_description">SEO Description:</label>
+                        <textarea name="seo_description" id="seo_description" class="form-control" rows="4">{{ $product->seo_description }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="seo_tags">SEO Tags:</label>
+                        <input type="text" name="seo_tags" id="seo_tags" value="{{ $product->seo_tags }}" class="form-control">
+                    </div>
                     <div class="form-group text-right">
                         <button type="submit" class="btn btn-primary">Update Product</button>
                     </div>
