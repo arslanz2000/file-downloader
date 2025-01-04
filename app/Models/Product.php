@@ -29,6 +29,7 @@ class Product extends Model
         'details',
         'tags',
         'description',
+        'additional_tags',
     ];
 
     protected $casts = [

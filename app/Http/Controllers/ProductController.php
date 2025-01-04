@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
 class ProductController extends Controller
 {
+    public function dashboard(Request $request){
+        return view('dashboard');
+    }
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -21,7 +25,8 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('products.create');
+        $categories = Category::all();
+        return view('products.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -46,6 +51,7 @@ class ProductController extends Controller
             'details' => 'nullable|string',
             'tags' => 'nullable|string',
             'description' => 'nullable|string',
+            'additional_tags' => 'nullable|string',
         ]);
 
         $product = new Product($validated);
@@ -66,7 +72,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('products.edit', compact('product'));
+        $categories = Category::all();
+        return view('products.edit', compact('product' , 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -91,6 +98,7 @@ class ProductController extends Controller
             'details' => 'nullable|string',
             'tags' => 'nullable|string',
             'description' => 'nullable|string',
+            'additional_tags' => 'nullable|string',
         ]);
 
         $product = Product::findOrFail($id);
@@ -164,6 +172,51 @@ class ProductController extends Controller
         $sixMonthsAgo = now()->subMonths(6);
 
         $products = Product::where('created_at', '>=', $sixMonthsAgo)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return response()->json([
+            'success' => true,
+            'total' => $products->total(),
+            'data' => $products->items(),
+            'current_page' => $products->currentPage(),
+            'last_page' => $products->lastPage(),
+        ]);
+    }
+
+    public function fetchSearchProducts(Request $request)
+    {
+        $query = Product::query();
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('category', 'LIKE', '%' . $search . '%')
+                    ->orWhere('subcategory', 'LIKE', '%' . $search . '%');
+            });
+        }
+
+        $products = $query->paginate(10);
+
+        return response()->json([
+            'success' => true,
+            'data' => $products->items(),
+            'total' => $products->total(),
+            'current_page' => $products->currentPage(),
+            'last_page' => $products->lastPage(),
+        ]);
+    }
+
+    public function fetchAdditionalFields(Request $request)
+    {
+        $validated = $request->validate([
+            'additional_field' => 'required|string|max:255',
+        ]);
+
+        $additional_field = $validated['additional_field'];
+
+        $products = Product::where('additional_tags', $additional_field)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 

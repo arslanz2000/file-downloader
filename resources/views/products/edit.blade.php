@@ -61,9 +61,35 @@
                         @endif
                     </div>
 
-                    <div class="form-group">
-                        <label for="category">Category:</label>
-                        <input type="text" name="category" id="category" value="{{ $product->category }}" class="form-control" required>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select name="category" id="category" class="form-control" required>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->name }}" 
+                                    {{ isset($product) && $product->category == $category->name ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+
+                    <div class="mb-3">
+                        <label for="additional_tags" class="form-label">Additional Tags</label>
+                        <select name="additional_tags" id="additional_tags" class="form-control">
+                            <option value="" {{ (isset($product) && is_null($product->additional_tags)) ? 'selected' : '' }}>
+                                -- Select an Option --
+                            </option>
+                            <option value="popular" {{ (isset($product) && $product->additional_tags == 'popular') ? 'selected' : '' }}>
+                                Popular
+                            </option>
+                            <option value="mostview" {{ (isset($product) && $product->additional_tags == 'mostview') ? 'selected' : '' }}>
+                                Most View
+                            </option>
+                            <option value="new" {{ (isset($product) && $product->additional_tags == 'new') ? 'selected' : '' }}>
+                                New
+                            </option>
+                        </select>
                     </div>
 
                     <div class="form-group">

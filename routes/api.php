@@ -19,6 +19,12 @@ Route::post('/products/category', [ProductController::class, 'fetchProductsByCat
 Route::get('/products/recent-products', [ProductController::class, 'fetchLastSixMonthsProducts']);
 
 
+Route::post('/products/search', [ProductController::class, 'fetchSearchProducts']);
+
+
+Route::post('/products/additional/field', [ProductController::class, 'fetchAdditionalFields']);
+
+
 
 
 
