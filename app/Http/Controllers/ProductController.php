@@ -52,6 +52,9 @@ class ProductController extends Controller
             'tags' => 'nullable|string',
             'description' => 'nullable|string',
             'additional_tags' => 'nullable|string',
+            'seo_title' => 'nullable|string',
+            'seo_description'=> 'nullable|string',
+            'seo_tags' => 'nullable|string', 
         ]);
 
         $product = new Product($validated);
@@ -99,6 +102,9 @@ class ProductController extends Controller
             'tags' => 'nullable|string',
             'description' => 'nullable|string',
             'additional_tags' => 'nullable|string',
+            'seo_title' => 'nullable|string',
+            'seo_description'=> 'nullable|string',
+            'seo_tags' => 'nullable|string', 
         ]);
 
         $product = Product::findOrFail($id);

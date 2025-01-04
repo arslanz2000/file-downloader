@@ -175,6 +175,21 @@
             <input type="text" name="tags" id="tags" class="form-control" value="{{ $product->tags ?? '' }}">
         </div>
 
+        <div class="mb-3">
+            <label for="seo_title" class="form-label">SEO Title</label>
+            <input type="text" name="seo_title" id="seo_title" class="form-control" value="{{ $product->seo_title ?? '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="seo_description" class="form-label">SEO Description</label>
+            <textarea name="seo_description" id="seo_description" class="form-control">{{ $product->seo_description ?? '' }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="seo_tags" class="form-label">SEO Tags</label>
+            <input type="text" name="seo_tags" id="seo_tags" class="form-control" value="{{ $product->seo_tags ?? '' }}">
+        </div>
+
         <button type="submit" class="btn btn-primary">{{ isset($product) ? 'Update' : 'Add' }} Product</button>
     </form>
 
