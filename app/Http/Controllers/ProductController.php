@@ -168,21 +168,27 @@ class ProductController extends Controller
     }
 
     public function fetchLastSixMonthsProducts(Request $request)
-    {
-        $sixMonthsAgo = now()->subMonths(6);
+{
+    $sixMonthsAgo = now()->subMonths(6);
 
-        $products = Product::where('created_at', '>=', $sixMonthsAgo)
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+    $filter = $request->input('filter', null);
 
-        return response()->json([
-            'success' => true,
-            'total' => $products->total(),
-            'data' => $products->items(),
-            'current_page' => $products->currentPage(),
-            'last_page' => $products->lastPage(),
-        ]);
+    $query = Product::where('created_at', '>=', $sixMonthsAgo);
+
+    if ($filter) {
+        $query->where('category', $filter);
     }
+
+    $products = $query->orderBy('created_at', 'desc')->paginate(10);
+
+    return response()->json([
+        'success' => true,
+        'total' => $products->total(),
+        'data' => $products->items(),
+        'current_page' => $products->currentPage(),
+        'last_page' => $products->lastPage(),
+    ]);
+}
 
     public function fetchSearchProducts(Request $request)
     {
@@ -218,7 +224,7 @@ class ProductController extends Controller
 
         $products = Product::where('additional_tags', $additional_field)
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(8);
 
         return response()->json([
             'success' => true,
