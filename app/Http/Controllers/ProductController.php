@@ -240,4 +240,20 @@ class ProductController extends Controller
             'last_page' => $products->lastPage(),
         ]);
     }
+
+    public function getRandomProducts(Request $request)
+    {
+        $request->validate([
+            'category' => 'required|string'
+        ]);
+
+        $category = $request->input('category');
+
+        $products = Product::where('category', $category)->inRandomOrder()->take(2)->get();
+
+        return response()->json([
+            'success' => true,
+            'products' => $products
+        ]);
+    }
 }

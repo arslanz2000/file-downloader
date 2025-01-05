@@ -25,6 +25,10 @@ Route::post('/products/search', [ProductController::class, 'fetchSearchProducts'
 Route::post('/products/additional/field', [ProductController::class, 'fetchAdditionalFields']);
 
 
+Route::post('/related-products', [ProductController::class, 'getRandomProducts']);
+
+
+
 
 
 

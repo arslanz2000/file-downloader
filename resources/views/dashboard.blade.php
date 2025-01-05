@@ -36,15 +36,7 @@
                         </a>
                     </div>
     
-                    <!-- Card 4 -->
-                    <div class="bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow">
-                        <a href="{{ route('upcoming-products.index') }}" class="block p-6">
-                            <h3 class="text-xl font-semibold text-gray-800">Another Feature</h3>
-                            <p class="text-gray-600 mt-2">
-                                Access another key feature of the application.
-                            </p>
-                        </a>
-                    </div>
+                    
                 </div>
             </div>
         </div>

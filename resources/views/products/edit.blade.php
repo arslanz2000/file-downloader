@@ -146,6 +146,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="pass_code">Pass Code:</label>
+                        <input type="text" name="pass_code" id="pass_code" value="{{ $product->total_downloads }}" class="form-control">
+                    </div>
+
+                    <div class="form-group">
                         <label for="display_picture">Upload Display Picture:</label>
                         <input type="file" name="display_picture" id="display_picture" class="form-control-file" accept="image/*">
                         @if($product->display_picture)

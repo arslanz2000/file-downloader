@@ -158,6 +158,11 @@
         </div>
 
         <div class="mb-3">
+            <label for="pass_code" class="form-label">Total Downloads</label>
+            <input type="text" name="pass_code" id="pass_code" class="form-control" value="{{ $product->total_downloads ?? '' }}">
+        </div>
+
+        <div class="mb-3">
             <label for="display_picture" class="form-label">Display Picture</label>
             <input type="file" name="display_picture" id="display_picture" class="form-control" accept="image/*">
             @if(isset($product) && $product->display_picture)
